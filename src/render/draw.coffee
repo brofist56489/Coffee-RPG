@@ -5,7 +5,7 @@ class Draw
 		gl.clear(gl.COLOR_BUFFER_BIT)
 
 	@setColor: (color) ->
-		DrawUtil.shader.uniforms["color"].set(color)
+		DrawUtil.shader.uniformColor.set(color)
 		return
 
 	@rect: (x, y, w, h, r=0) ->

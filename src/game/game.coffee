@@ -16,11 +16,12 @@ class Game
 		return
 
 	render: ->
-		Draw.setColor(vec4.clone([1, 1, 1, 1]))
 		Draw.clear([0, 0, 0, 1])
+		Draw.setColor(vec4.clone([0, 1, 0, 1]))
 		for i in [0...1]
 			Draw.rect((i % 10)*50, Math.floor(i / 10)*50, 50, 50)
-		Draw.rect(75, 0, 50, 50)
+		Draw.setColor(vec4.clone([0, 0, 1, 1]))
+		Draw.rect(50+Math.cos(@v * Math.PI)*50, 50+Math.sin(@v * Math.PI)*50, 50, 50)
 		return
 
 class GameTimer

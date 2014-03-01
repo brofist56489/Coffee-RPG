@@ -4,8 +4,8 @@ gl = null
 class DrawUtil
 	@canvas : null
 
-	@WIDTH : 360
-	@HEIGHT : 202
+	@WIDTH : 854
+	@HEIGHT : 480
 
 	@shader : null
 
@@ -30,19 +30,19 @@ class DrawUtil
 		gl.disable(gl.CULL_FACE) 
 
 	@setupShaders: ->
-		console.log(@initShaders())
+		@initShaders()
 
 		@shader = SHADERS[0].use()
 
 		viewMat = mat4.create()
 		mat4.identity(viewMat)
 		mat4.ortho(viewMat, 0, @WIDTH, @HEIGHT, 0, -1, 1)
-		@shader.uniforms["viewMatrix"].set(viewMat)
+		@shader.uniformViewMatrix.set(viewMat)
 
 		camMat = mat4.create()
 		mat4.identity(camMat)
 		mat4.translate(camMat, camMat, vec3.clone([0, 0, 0]))
-		@shader.uniforms["cameraMatrix"].set(camMat)
+		@shader.uniformCameraMatrix.set(camMat)
 		return
 
 	@initShaders: ->

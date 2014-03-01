@@ -5,7 +5,11 @@ class Shader
 	fragmentShaderCode : ""
 	program : null,
 	attributes : [-1, -1],
-	uniforms : {},
+
+	uniformViewMatrix : null
+	uniformCameraMatrix : null
+	uniformObjectMatrix : null
+	uniformColor : null
 
 	constructor: (vert, frag) ->
 		@vertexShaderCode = vert
@@ -47,10 +51,10 @@ class Shader
 		@attributes[0] = gl.getAttribLocation(@program, "aPos")
 		@attributes[1] = gl.getAttribLocation(@program, "aTexCoord")
 
-		@uniforms["viewMatrix"] = new ShaderUniform(@program, "uViewMatrix", ShaderUniformType.MATRIX_4)
-		@uniforms["cameraMatrix"] = new ShaderUniform(@program, "uCameraMatrix", ShaderUniformType.MATRIX_4)
-		@uniforms["objectMatrix"] = new ShaderUniform(@program, "uObjectMatrix", ShaderUniformType.MATRIX_4)
-		@uniforms["color"] = new ShaderUniform(@program, "uColor", ShaderUniformType.VECTOR_4)
+		@uniformViewMatrix = new ShaderUniform(@program, "uViewMatrix", ShaderUniformType.MATRIX_4)
+		@uniformCameraMatrix = new ShaderUniform(@program, "uCameraMatrix", ShaderUniformType.MATRIX_4)
+		@uniformObjectMatrix = new ShaderUniform(@program, "uObjectMatrix", ShaderUniformType.MATRIX_4)
+		@uniformColor = new ShaderUniform(@program, "uColor", ShaderUniformType.VECTOR_4)
 		return this
 
 	use: ->

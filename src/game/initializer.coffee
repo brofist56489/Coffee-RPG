@@ -1,0 +1,2 @@
+initializeGame = () ->
+	Assets.init()
