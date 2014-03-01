@@ -1,0 +1,61 @@
+<html>
+	<body>
+	<div id="basic-vs" type="x-shader/x-vertex">
+		precision highp float;
+
+		attribute vec2 aPos;
+		attribute vec2 aTexCoord;
+
+		uniform mat4 uViewMatrix;
+		uniform mat4 uCameraMatrix;
+		uniform mat4 uObjectMatrix;
+
+		varying vec2 vTexCoord;
+		varying vec2 vPos;
+
+		varying mat4 vViewMatrix;
+		varying mat4 vCameraMatrix;
+
+		void main() {
+			vViewMatrix = uViewMatrix;
+			vCameraMatrix = uCameraMatrix;
+
+			vTexCoord = aTexCoord;
+			vec4 pos = uViewMatrix * uCameraMatrix * uObjectMatrix * vec4(aPos, 0.0, 1.0);
+			vPos = pos.xy;
+			gl_Position = pos;
+		}
+	</div>
+	<div id="basic-fs" type="x-shader/x-fragment">
+		precision highp float;
+
+		varying vec2 vTexCoord;
+		varying vec2 vPos;
+
+		varying mat4 vViewMatrix;
+		varying mat4 vCameraMatrix;
+
+		uniform vec4 uColor;
+		//uniform sampler2D uTex;
+
+		// float distance_emu(vec2 p1, vec2 p2) {
+		// 	return length(p1 - p2);
+		// }
+
+		void main() {
+			// mediump vec2 lightPos = (vViewMatrix * vCameraMatrix * vec4(100, 100, 0.0, 1.0)).xy;
+			// mediump float lightRad = 100.0 / 427.0;
+
+			// mediump float brightness = 0.15;
+			// mediump float dist = distance(lightPos, vPos);
+			// if(dist < lightRad) {
+			// 	brightness += 1.0 - (dist / lightRad);
+			// 	// brightness = 1.0;
+			// }
+			// brightness = min(brightness, 1.0);
+
+			//vec4 texColor = texture2D(uTex, vTexCoord);
+			gl_FragColor = uColor; //* vec4(brightness, brightness, brightness, 1.0);// * texColor;
+		}
+	</div>
+</html>
