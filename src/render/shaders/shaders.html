@@ -24,11 +24,14 @@
 
 		varying vec2 vTexCoord;
 
+		uniform mat4 uTextureMatrix;
 		uniform vec4 uColor;
 		uniform sampler2D uTex;
 
 		void main() {
-			vec4 texColor = texture2D(uTex, vTexCoord);
+			vec2 texCoord = (uTextureMatrix * vec4(vTexCoord, 0.0, 1.0)).xy;
+
+			vec4 texColor = texture2D(uTex, texCoord);
 			gl_FragColor = uColor * texColor;
 		}
 	</div>

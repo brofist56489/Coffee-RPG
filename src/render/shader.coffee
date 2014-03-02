@@ -1,15 +1,18 @@
 class Shader
 	vertexShader : null
 	fragmentShader : null
-	vertexShaderCode : "",
+	vertexShaderCode : ""
 	fragmentShaderCode : ""
-	program : null,
-	attributes : [-1, -1],
+	program : null
+
+	attributePosition : null
+	attributeTexCoord : null
 
 	uniformViewMatrix : null
 	uniformCameraMatrix : null
 	uniformObjectMatrix : null
 	uniformColor : null
+	uniformTextureMatrix : null
 
 	constructor: (vert, frag) ->
 		@vertexShaderCode = vert
@@ -48,19 +51,20 @@ class Shader
 		return yes
 
 	setupAttribs: ->
-		@attributes[0] = gl.getAttribLocation(@program, "aPos")
-		@attributes[1] = gl.getAttribLocation(@program, "aTexCoord")
+		@attributePosition = gl.getAttribLocation(@program, "aPos")
+		@attributeTexCoord = gl.getAttribLocation(@program, "aTexCoord")
 
 		@uniformViewMatrix = new ShaderUniform(@program, "uViewMatrix", ShaderUniformType.MATRIX_4)
 		@uniformCameraMatrix = new ShaderUniform(@program, "uCameraMatrix", ShaderUniformType.MATRIX_4)
 		@uniformObjectMatrix = new ShaderUniform(@program, "uObjectMatrix", ShaderUniformType.MATRIX_4)
 		@uniformColor = new ShaderUniform(@program, "uColor", ShaderUniformType.VECTOR_4)
+		@uniformTextureMatrix = new ShaderUniform(@program, "uTextureMatrix", ShaderUniformType.MATRIX_4)
 		return this
 
 	use: ->
 		gl.useProgram(@program)
-		gl.enableVertexAttribArray(@attributes[0])
-		gl.enableVertexAttribArray(@attributes[1])
+		gl.enableVertexAttribArray(@attributePosition)
+		gl.enableVertexAttribArray(@attributeTexCoord)
 		return this
 
 SHADERS = [

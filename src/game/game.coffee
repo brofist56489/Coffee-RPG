@@ -26,7 +26,7 @@ class Game
 		for i in [0...40]
 			Draw.rect((i % 10)*50+Math.cos(@v * Math.PI)*50, Math.floor(i / 10)*50+Math.sin(@v * Math.PI)*50, 45, 45)
 		Draw.setColor(vec4.clone([0, 0, 1, 1]))
-		Draw.rect(50+Math.cos(@v * Math.PI)*50, 50+Math.sin(@v * Math.PI)*50, 50, 50)
+		Draw.rect(50+Math.cos(@v * Math.PI)*50, 50+Math.sin(@v * Math.PI)*50, 45, 45)
 		return
 
 class GameTimer

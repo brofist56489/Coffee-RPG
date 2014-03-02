@@ -19,8 +19,8 @@ class Mesh
 		shader.uniformObjectMatrix.set(mat)
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, @vertexBuffer)
-		gl.vertexAttribPointer(shader.attributes[0], 2, gl.FLOAT, false, 16, 0)
-		gl.vertexAttribPointer(shader.attributes[1], 2, gl.FLOAT, false, 16, 8)
+		gl.vertexAttribPointer(shader.attributePosition, 2, gl.FLOAT, false, 16, 0)
+		gl.vertexAttribPointer(shader.attributeTexCoord, 2, gl.FLOAT, false, 16, 8)
 		gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 		# gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, @indexBuffer)
 		# gl.drawElements(gl.TRIANGLES, @size, gl.UNSIGNED_SHORT, 0)
@@ -34,6 +34,6 @@ initMeshes = ->
 	MESHES.QUAD.setVertices([
 			0, 0, 0, 0,
 			1, 0, 1, 0,
-			0, 1, 1, 1,
-			1, 1, 0, 1,
+			0, 1, 0, 1,
+			1, 1, 1, 1,
 		])

@@ -43,11 +43,15 @@ class DrawUtil
 		mat4.identity(camMat)
 		mat4.translate(camMat, camMat, vec3.clone([0, 0, 0]))
 		@shader.uniformCameraMatrix.set(camMat)
+
+		texMat = mat4.create()
+		mat4.identity(texMat)
+		@shader.uniformTextureMatrix.set(texMat)
 		return
 
 	@initShaders: ->
 		for shader in SHADERS
 			shader.getShaderCode(shader.vertexShaderCode, shader.fragmentShaderCode)
 
-			if not shader.compile() then throw "Poop!"
+			if not shader.compile() then throw "Shaders not loaded correctly"
 			shader.setupAttribs()
