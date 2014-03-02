@@ -1,18 +1,18 @@
 class TextureManager
 
-	@textures : {}
+	textures : {}
 
-	@add: (name, path) ->
+	add: (name, path) ->
 		@textures[name] = new Texture(path)
 		if gl? then @textures[name].load()
 		return
 
-	@loadAll: ->
+	loadAll: ->
 		if not gl? then return
 		for text in @textures
 			text.load()
 
-	@get: (name) ->
+	get: (name) ->
 		return @textures[name]
 
 class Texture
@@ -41,3 +41,8 @@ class Texture
 
 		@image.src = @path
 		return
+
+	use: ->
+		if not gl? then return
+		if not @loaded then return
+		gl.bindTexture(gl.TEXTURE_2D, @texture)

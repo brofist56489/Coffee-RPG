@@ -4,9 +4,12 @@ class Game
 	v : 0
 
 	constructor: ->
+		initializeGame()
 		return
 
 	start: ->
+		Assets.Textures.loadAll()
+
 		@timer = new GameTimer(@)
 		@running = true
 		@timer.start()
@@ -16,10 +19,12 @@ class Game
 		return
 
 	render: ->
+		Assets.Textures.get("test").use()
+
 		Draw.clear([0, 0, 0, 1])
 		Draw.setColor(vec4.clone([0, 1, 0, 1]))
-		for i in [0...1]
-			Draw.rect((i % 10)*50, Math.floor(i / 10)*50, 50, 50)
+		for i in [0...40]
+			Draw.rect((i % 10)*50+Math.cos(@v * Math.PI)*50, Math.floor(i / 10)*50+Math.sin(@v * Math.PI)*50, 45, 45)
 		Draw.setColor(vec4.clone([0, 0, 1, 1]))
 		Draw.rect(50+Math.cos(@v * Math.PI)*50, 50+Math.sin(@v * Math.PI)*50, 50, 50)
 		return
@@ -66,7 +71,7 @@ class GameTimer
 
 		if @now - @ltr >= 1000
 			@ltr += 1000
-			# console.log("#{@ticks} tps, #{@frames} fps")
+			console.log("#{@ticks} tps, #{@frames} fps")
 			@ticks = 0
 			@frames = 0
 
