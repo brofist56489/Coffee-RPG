@@ -9,6 +9,8 @@ class Draw
 		return
 
 	@rect: (x, y, w, h, r=0) ->
+		if x+w<0 or y+h<0 or x >= DrawUtil.WIDTH or y >= DrawUtil.HEIGHT then return
+
 		mat = mat4.create()
 		mat4.identity(mat)
 		mat4.translate(mat,  mat, vec3.clone([x, y, 0]))

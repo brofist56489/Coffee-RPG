@@ -311,6 +311,12 @@ vec2.max = function(out, a, b) {
     return out;
 };
 
+vec2.clamp = function(out, val, bound1, bound2) {
+    out[0] = Math.min(Math.max(val[0], bound1[0]), bound2[0]);
+    out[1] = Math.min(Math.max(val[1], bound1[1]), bound2[1]);
+    return out;
+};
+
 /**
  * Scales a vec2 by a scalar number
  *

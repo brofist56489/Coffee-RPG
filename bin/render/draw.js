@@ -21,6 +21,9 @@ Draw = (function() {
     if (r == null) {
       r = 0;
     }
+    if (x + w < 0 || y + h < 0 || x >= DrawUtil.WIDTH || y >= DrawUtil.HEIGHT) {
+      return;
+    }
     mat = mat4.create();
     mat4.identity(mat);
     mat4.translate(mat, mat, vec3.clone([x, y, 0]));

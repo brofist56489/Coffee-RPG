@@ -6,10 +6,21 @@ Game = (function() {
 
   Game.prototype.timer = null;
 
-  Game.prototype.v = 0;
+  Game.prototype.world = null;
 
   function Game() {
+    var e, i, _i;
     initializeGame();
+    this.world = new World();
+    this.world.addSystem(new ControlSystem());
+    this.world.addSystem(new MoveSystem());
+    this.world.addSystem(new BounceSystem());
+    for (i = _i = 0; _i < 30; i = ++_i) {
+      e = new Entity(["Moveable", "Controllable"]);
+      e.pos[0] = (i % 10) * 50;
+      e.pos[1] = Math.floor(i / 10) * 50;
+      this.world.addEntity(e);
+    }
     return;
   }
 
@@ -21,19 +32,12 @@ Game = (function() {
   };
 
   Game.prototype.update = function() {
-    this.v += 0.01;
+    this.world.update();
   };
 
   Game.prototype.render = function() {
-    var i, _i;
-    Assets.Textures.get("test").use();
     Draw.clear([0, 0, 0, 1]);
-    Draw.setColor(vec4.clone([0, 1, 0, 1]));
-    for (i = _i = 0; _i < 40; i = ++_i) {
-      Draw.rect((i % 10) * 50 + Math.cos(this.v * Math.PI) * 50, Math.floor(i / 10) * 50 + Math.sin(this.v * Math.PI) * 50, 45, 45);
-    }
-    Draw.setColor(vec4.clone([0, 0, 1, 1]));
-    Draw.rect(50 + Math.cos(this.v * Math.PI) * 50, 50 + Math.sin(this.v * Math.PI) * 50, 45, 45);
+    this.world.render();
   };
 
   return Game;
@@ -96,7 +100,6 @@ GameTimer = (function() {
     this.frames++;
     if (this.now - this.ltr >= 1000) {
       this.ltr += 1000;
-      console.log("" + this.ticks + " tps, " + this.frames + " fps");
       this.ticks = 0;
       this.frames = 0;
     }

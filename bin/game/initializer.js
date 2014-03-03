@@ -3,5 +3,8 @@ var initializeGame;
 
 initializeGame = function() {
   Assets.init();
-  return Assets.Textures.add("test", "res/images/test.png");
+  Assets.Textures.add("test", "res/images/test.png");
+  Input.init();
+  MoveableComponent.register("Moveable");
+  return ControllableComponent.register("Controllable");
 };

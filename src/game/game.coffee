@@ -1,10 +1,23 @@
 class Game
 	running : false
 	timer : null
-	v : 0
+
+	world : null
 
 	constructor: ->
 		initializeGame()
+
+		@world = new World()
+
+		@world.addSystem(new ControlSystem())
+		@world.addSystem(new MoveSystem())
+		@world.addSystem(new BounceSystem())
+		for i in [0...30]
+			# val = if Math.random() > 0.5 then ["Moveable"] else ["Moveable", "Color"]
+			e = new Entity(["Moveable", "Controllable"])
+			e.pos[0] = (i % 10) * 50
+			e.pos[1] = Math.floor(i / 10) * 50
+			@world.addEntity(e)
 		return
 
 	start: ->
@@ -15,18 +28,12 @@ class Game
 		@timer.start()
 
 	update: ->
-		@v += 0.01
+		@world.update()
 		return
 
 	render: ->
-		Assets.Textures.get("test").use()
-
 		Draw.clear([0, 0, 0, 1])
-		Draw.setColor(vec4.clone([0, 1, 0, 1]))
-		for i in [0...40]
-			Draw.rect((i % 10)*50+Math.cos(@v * Math.PI)*50, Math.floor(i / 10)*50+Math.sin(@v * Math.PI)*50, 45, 45)
-		Draw.setColor(vec4.clone([0, 0, 1, 1]))
-		Draw.rect(50+Math.cos(@v * Math.PI)*50, 50+Math.sin(@v * Math.PI)*50, 45, 45)
+		@world.render()
 		return
 
 class GameTimer
@@ -71,7 +78,7 @@ class GameTimer
 
 		if @now - @ltr >= 1000
 			@ltr += 1000
-			console.log("#{@ticks} tps, #{@frames} fps")
+			# console.log("#{@ticks} tps, #{@frames} fps")
 			@ticks = 0
 			@frames = 0
 

@@ -32,7 +32,13 @@
 			vec2 texCoord = (uTextureMatrix * vec4(vTexCoord, 0.0, 1.0)).xy;
 
 			vec4 texColor = texture2D(uTex, texCoord);
-			gl_FragColor = uColor * texColor;
+			vec4 col = vec4(0.0, 0.0, 0.0, 1.0);
+			//if(texColor.a == 1.0) {
+			//	col = uColor * texColor;
+			//} else {
+				col = uColor;
+			//}
+			gl_FragColor = col;
 		}
 	</div>
 </html>
